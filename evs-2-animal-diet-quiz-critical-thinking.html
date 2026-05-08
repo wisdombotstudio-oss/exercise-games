@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animal Diet Quiz - Critical Thinking</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .pop {
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-teal-50 min-h-screen p-4 md:p-8 font-sans text-gray-800">
+
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+
+        <!-- Header -->
+        <div
+            class="bg-teal-600 text-white p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4">
+
+            <div class="flex items-start gap-4">
+                <span class="text-2xl font-bold text-teal-200">B.</span>
+
+                <p class="text-lg md:text-xl font-medium leading-relaxed">
+                    Tick (✓) the animals that eat meat and Cross (✗) the animals that eat plants.
+                </p>
+            </div>
+
+            <span
+                class="bg-teal-800/50 text-teal-100 py-1 px-4 rounded-full text-sm font-bold tracking-wider border border-teal-500 whitespace-nowrap">
+                CRITICAL THINKING
+            </span>
+        </div>
+
+        <!-- Quiz Grid -->
+        <div class="p-6 md:p-8">
+
+            <!-- IMPORTANT: NO DUPLICATE BOXES -->
+            <div id="quiz-grid"
+                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+            </div>
+
+            <!-- Submit Section -->
+            <div class="mt-12 text-center border-t border-gray-100 pt-8">
+
+                <button onclick="checkAnswers()"
+                    class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-colors text-lg">
+                    Check Answers
+                </button>
+
+                <div id="results-area"
+                    class="mt-6 text-xl font-bold hidden">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        const animals = [
+            {
+                id: 'zebra',
+                name: 'Zebra',
+                imageUrl: 'https://images.unsplash.com/photo-1526095179574-86e545346ae6?auto=format&fit=crop&w=500&q=80',
+                expectedSymbol: '✗'
+            },
+            {
+                id: 'fox',
+                name: 'Fox',
+                imageUrl: 'https://images.unsplash.com/photo-1516934024742-b461fba47600?auto=format&fit=crop&w=500&q=80',
+                expectedSymbol: '✓'
+            },
+            {
+                id: 'tiger',
+                name: 'Tiger',
+                imageUrl: 'https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=500&q=80',
+                expectedSymbol: '✓'
+            },
+            {
+                id: 'lion',
+                name: 'Lion',
+                imageUrl: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?auto=format&fit=crop&w=500&q=80',
+                expectedSymbol: '✓'
+            },
+            {
+                id: 'elephant',
+                name: 'Elephant',
+                imageUrl: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=500&q=80',
+                expectedSymbol: '✗'
+            },
+            {
+                id: 'deer',
+                name: 'Deer',
+                imageUrl: 'https://images.unsplash.com/photo-1484406566174-9da000fda645?auto=format&fit=crop&w=500&q=80',
+                expectedSymbol: '✗'
+            }
+        ];
+
+        let userAnswers = {};
+
+        function renderQuiz() {
+
+            const grid = document.getElementById('quiz-grid');
+
+            grid.innerHTML = '';
+
+            animals.forEach(animal => {
+
+                const card = document.createElement('div');
+
+                card.className = "flex flex-col gap-3 group";
+
+                card.innerHTML = `
+                
+                    <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-sm border border-gray-200 bg-gray-100">
+
+                        <img 
+                            src="${animal.imageUrl}" 
+                            alt="${animal.name}" 
+                            class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 z-10"
+                        />
+
+                        <div 
+                            id="box-${animal.id}" 
+                            class="absolute bottom-3 right-3 w-10 h-10 bg-white border-2 border-gray-400 rounded-md shadow flex items-center justify-center text-2xl font-black text-gray-800 transition-colors z-20">
+                        </div>
+
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 mt-2">
+
+                        <button
+                            onclick="selectDiet('${animal.id}','meat')"
+                            id="btn-meat-${animal.id}"
+                            class="py-2 text-sm font-bold rounded border-2 border-gray-200 hover:border-green-500 hover:bg-green-50 transition-colors">
+
+                            <span class="text-green-600 mr-1">✓</span>
+                            Meat
+
+                        </button>
+
+                        <button
+                            onclick="selectDiet('${animal.id}','plants')"
+                            id="btn-plants-${animal.id}"
+                            class="py-2 text-sm font-bold rounded border-2 border-gray-200 hover:border-red-500 hover:bg-red-50 transition-colors">
+
+                            <span class="text-red-500 mr-1">✗</span>
+                            Plants
+
+                        </button>
+
+                    </div>
+
+                    <div 
+                        id="feedback-${animal.id}" 
+                        class="text-center text-sm font-bold h-5">
+                    </div>
+                `;
+
+                grid.appendChild(card);
+
+            });
+
+        }
+
+        function selectDiet(animalId, dietType) {
+
+            const symbol = dietType === 'meat' ? '✓' : '✗';
+
+            const symbolColor = dietType === 'meat'
+                ? 'text-green-600'
+                : 'text-red-600';
+
+            userAnswers[animalId] = symbol;
+
+            const box = document.getElementById(`box-${animalId}`);
+
+            box.innerHTML = `
+                <span class="${symbolColor} pop">
+                    ${symbol}
+                </span>
+            `;
+
+            document.getElementById(`btn-meat-${animalId}`)
+                .classList.remove('bg-green-100', 'border-green-500');
+
+            document.getElementById(`btn-plants-${animalId}`)
+                .classList.remove('bg-red-100', 'border-red-500');
+
+            if (dietType === 'meat') {
+
+                document.getElementById(`btn-meat-${animalId}`)
+                    .classList.add('bg-green-100', 'border-green-500');
+
+            } else {
+
+                document.getElementById(`btn-plants-${animalId}`)
+                    .classList.add('bg-red-100', 'border-red-500');
+
+            }
+
+            document.getElementById(`feedback-${animalId}`).innerHTML = '';
+
+        }
+
+        function checkAnswers() {
+
+            let score = 0;
+
+            let total = animals.length;
+
+            let allAnswered = true;
+
+            animals.forEach(animal => {
+
+                const feedbackDiv =
+                    document.getElementById(`feedback-${animal.id}`);
+
+                const userAnswer = userAnswers[animal.id];
+
+                if (!userAnswer) {
+
+                    allAnswered = false;
+
+                    feedbackDiv.innerHTML = "Please select an answer";
+
+                    feedbackDiv.className =
+                        "text-center text-sm font-bold h-5 text-orange-500";
+
+                    return;
+                }
+
+                if (userAnswer === animal.expectedSymbol) {
+
+                    score++;
+
+                    feedbackDiv.innerHTML = "Correct!";
+
+                    feedbackDiv.className =
+                        "text-center text-sm font-bold h-5 text-green-600";
+
+                } else {
+
+                    feedbackDiv.innerHTML = "Incorrect";
+
+                    feedbackDiv.className =
+                        "text-center text-sm font-bold h-5 text-red-600";
+                }
+
+            });
+
+            const resultsArea = document.getElementById('results-area');
+
+            resultsArea.classList.remove('hidden');
+
+            if (!allAnswered) {
+
+                resultsArea.innerHTML = `
+                    <span class="text-orange-500 pop">
+                        Please answer all questions before checking!
+                    </span>
+                `;
+
+            } else {
+
+                const percentage = (score / total) * 100;
+
+                let message =
+                    percentage === 100
+                        ? "Perfect! 🎉"
+                        : "Good try! 💡";
+
+                let colorClass =
+                    percentage === 100
+                        ? "text-green-600"
+                        : "text-teal-600";
+
+                resultsArea.innerHTML = `
+                    <div class="${colorClass} pop">
+                        You scored ${score} out of ${total}
+                        <br>
+                        <span class="text-lg font-medium">
+                            ${message}
+                        </span>
+                    </div>
+                `;
+            }
+        }
+
+        renderQuiz();
+
+    </script>
+
+</body>
+</html>

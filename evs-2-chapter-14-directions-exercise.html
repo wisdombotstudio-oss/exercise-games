@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Directions Exercise</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#e0f7ff,#fff4d6);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:900px;
+background:#fff;
+padding:35px;
+border-radius:25px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+border:5px solid #4fc3f7;
+}
+
+.heading{
+text-align:center;
+margin-bottom:25px;
+}
+
+.heading h1{
+font-size:34px;
+color:#0d47a1;
+margin-bottom:10px;
+}
+
+.heading p{
+font-size:20px;
+color:#00838f;
+font-weight:bold;
+}
+
+.question-list{
+margin-top:10px;
+}
+
+.question{
+font-size:24px;
+margin-bottom:22px;
+color:#222;
+line-height:1.7;
+}
+
+.blank{
+width:180px;
+padding:8px 10px;
+font-size:20px;
+border:none;
+border-bottom:3px solid #d43f9f;
+outline:none;
+text-align:center;
+background:#fdfdfd;
+}
+
+.blank.correct{
+border-bottom:3px solid #2e7d32;
+background:#c8f7c5;
+}
+
+.blank.wrong{
+border-bottom:3px solid #c62828;
+background:#ffcdd2;
+}
+
+.help-box{
+margin-top:35px;
+padding:22px;
+background:linear-gradient(135deg,#ffe0f0,#e1f5fe);
+border-radius:20px;
+border:3px dashed #ff9800;
+text-align:center;
+}
+
+.help-box h2{
+color:#d43f9f;
+margin-bottom:18px;
+font-size:28px;
+}
+
+.words{
+display:flex;
+justify-content:center;
+gap:18px;
+flex-wrap:wrap;
+}
+
+.word{
+padding:12px 24px;
+border-radius:14px;
+font-size:22px;
+font-weight:bold;
+color:#222;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+.word:nth-child(1){
+background:#ffeb3b;
+}
+
+.word:nth-child(2){
+background:#81d4fa;
+}
+
+.word:nth-child(3){
+background:#a5d6a7;
+}
+
+.word:nth-child(4){
+background:#ffccbc;
+}
+
+.buttons{
+text-align:center;
+margin-top:30px;
+}
+
+.btn{
+background:#ff9800;
+color:white;
+border:none;
+padding:14px 30px;
+border-radius:30px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+margin:10px;
+}
+
+.btn:hover{
+background:#f57c00;
+}
+
+.result{
+margin-top:20px;
+text-align:center;
+font-size:26px;
+font-weight:bold;
+color:#0d47a1;
+}
+
+@media(max-width:700px){
+
+.question{
+font-size:18px;
+}
+
+.blank{
+width:130px;
+font-size:16px;
+}
+
+.word{
+font-size:18px;
+padding:10px 16px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="heading">
+
+<h1>Directions Exercise</h1>
+
+<p>Use the help box to fill in the blanks.</p>
+
+</div>
+
+<div class="question-list">
+
+<div class="question">
+1. The school is located on the 
+<input type="text" id="q1" class="blank">
+side of the library.
+</div>
+
+<div class="question">
+2. The park is located on the 
+<input type="text" id="q2" class="blank">
+side of the hospital.
+</div>
+
+<div class="question">
+3. The petrol station is located to the 
+<input type="text" id="q3" class="blank">
+of the post office.
+</div>
+
+<div class="question">
+4. The supermarket is located to the 
+<input type="text" id="q4" class="blank">
+of the grocers.
+</div>
+
+<div class="question">
+5. You have to go 
+<input type="text" id="q5" class="blank">
+from the police station to reach the restaurant.
+</div>
+
+</div>
+
+<div class="help-box">
+
+<h2>Help Box</h2>
+
+<div class="words">
+
+<div class="word">East</div>
+<div class="word">West</div>
+<div class="word">North</div>
+<div class="word">South</div>
+
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button class="btn" onclick="checkAnswers()">
+Check Answers
+</button>
+
+<button class="btn" onclick="resetQuiz()">
+Reset
+</button>
+
+</div>
+
+<div class="result" id="result">
+Score: 0 / 5
+</div>
+
+</div>
+
+<script>
+
+const answers = {
+q1:"West",
+q2:"West",
+q3:"South",
+q4:"South",
+q5:"East"
+};
+
+function checkAnswers(){
+
+let score = 0;
+
+for(let key in answers){
+
+const input = document.getElementById(key);
+
+if(input.value.trim().toLowerCase() === answers[key].toLowerCase()){
+
+input.classList.add("correct");
+input.classList.remove("wrong");
+
+score++;
+
+}else{
+
+input.classList.add("wrong");
+input.classList.remove("correct");
+
+}
+
+}
+
+let wrong = Object.keys(answers).length - score;
+
+document.getElementById("result").innerText =
+`Score: ${score} / 5`;
+
+setTimeout(()=>{
+
+alert(
+`✅ Correct Answers: ${score}\n❌ Wrong Answers: ${wrong}`
+);
+
+},300);
+
+}
+
+function resetQuiz(){
+
+for(let key in answers){
+
+const input = document.getElementById(key);
+
+input.value = "";
+
+input.classList.remove("correct");
+input.classList.remove("wrong");
+
+}
+
+document.getElementById("result").innerText =
+"Score: 0 / 5";
+
+}
+
+</script>
+
+</body>
+</html>

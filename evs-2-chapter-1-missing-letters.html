@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fill in the Missing Letters</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background: linear-gradient(135deg,#f7fbff,#fff6f9);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+
+    .worksheet{
+      width:100%;
+      max-width:1000px;
+      background:#fff;
+      border-radius:24px;
+      padding:30px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.12);
+      border:4px solid #59c8eb;
+    }
+
+    .top-bar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:20px;
+    }
+
+    .heading{
+      color:#0ca6e8;
+      font-size:34px;
+      font-weight:bold;
+    }
+
+    .sub-heading{
+      font-size:24px;
+      color:#333;
+      margin-bottom:28px;
+      font-weight:600;
+    }
+
+    .badge{
+      background:#e54293;
+      color:#fff;
+      padding:8px 16px;
+      border-radius:20px;
+      font-size:15px;
+      font-weight:bold;
+      letter-spacing:1px;
+    }
+
+    .card-container{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:25px;
+    }
+
+    .card{
+      text-align:center;
+    }
+
+    .number{
+      font-size:34px;
+      font-weight:bold;
+      margin-bottom:12px;
+      color:#222;
+    }
+
+    .image-box{
+      background:#ead9cd;
+      border-radius:24px;
+      padding:20px;
+      height:180px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:18px;
+    }
+
+    .image-box img{
+      width:130px;
+      height:130px;
+      object-fit:contain;
+    }
+
+    .answer{
+      margin-top:10px;
+    }
+
+    .single-line{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex-wrap:nowrap;
+      gap:4px;
+    }
+
+    .single-line span{
+      font-size:34px;
+      font-weight:bold;
+      line-height:1;
+      color:#222;
+    }
+
+    input{
+      width:36px;
+      height:42px;
+      border:none;
+      border-bottom:3px solid #222;
+      text-align:center;
+      font-size:30px;
+      font-weight:bold;
+      outline:none;
+      text-transform:uppercase;
+      background:transparent;
+    }
+
+    input.correct{
+      border-bottom:3px solid green;
+      color:green;
+    }
+
+    input.wrong{
+      border-bottom:3px solid red;
+      color:red;
+    }
+
+    .btn-area{
+      text-align:center;
+      margin-top:35px;
+    }
+
+    button{
+      border:none;
+      padding:14px 28px;
+      border-radius:30px;
+      font-size:20px;
+      font-weight:bold;
+      cursor:pointer;
+      margin:6px;
+      color:#fff;
+      box-shadow:0 5px 12px rgba(0,0,0,0.2);
+    }
+
+    .check-btn{
+      background:#0ca6e8;
+    }
+
+    .reset-btn{
+      background:#ff9800;
+    }
+
+    .result{
+      margin-top:25px;
+      text-align:center;
+      font-size:28px;
+      color:#0d47a1;
+      font-weight:bold;
+    }
+
+    @media(max-width:700px){
+
+      .heading{
+        font-size:26px;
+      }
+
+      .sub-heading{
+        font-size:18px;
+      }
+
+      .single-line span{
+        font-size:26px;
+      }
+
+      input{
+        width:28px;
+        height:36px;
+        font-size:24px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="worksheet">
+
+  <div class="top-bar">
+
+    <div class="heading">
+      B. Fill in the missing letters.
+    </div>
+
+    <div class="badge">
+      RECALL AND APPLY
+    </div>
+
+  </div>
+
+  <div class="sub-heading">
+    Look at the picture and type the missing letters.
+  </div>
+
+  <div class="card-container">
+
+    <!-- Brain -->
+    <div class="card">
+
+      <div class="number">1.</div>
+
+      <div class="image-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966486.png" alt="Brain">
+      </div>
+
+      <div class="answer single-line">
+        <span>B</span>
+        <input maxlength="1" data-answer="R">
+        <span>A</span>
+        <input maxlength="1" data-answer="I">
+        <input maxlength="1" data-answer="N">
+      </div>
+
+    </div>
+
+    <!-- Heart -->
+    <div class="card">
+
+      <div class="number">2.</div>
+
+      <div class="image-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Heart">
+      </div>
+
+      <div class="answer single-line">
+        <span>H</span>
+        <input maxlength="1" data-answer="E">
+        <input maxlength="1" data-answer="A">
+        <input maxlength="1" data-answer="R">
+        <span>T</span>
+      </div>
+
+    </div>
+
+    <!-- Stomach -->
+    <div class="card">
+
+      <div class="number">3.</div>
+
+      <div class="image-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/822/822143.png" alt="Stomach">
+      </div>
+
+      <div class="answer single-line">
+        <span>S</span>
+        <span>T</span>
+        <input maxlength="1" data-answer="O">
+        <input maxlength="1" data-answer="M">
+        <input maxlength="1" data-answer="A">
+        <input maxlength="1" data-answer="C">
+        <input maxlength="1" data-answer="H">
+      </div>
+
+    </div>
+
+    <!-- Lungs -->
+    <div class="card">
+
+      <div class="number">4.</div>
+
+      <div class="image-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/619/619404.png" alt="Lungs">
+      </div>
+
+      <div class="answer single-line">
+        <span>L</span>
+        <input maxlength="1" data-answer="U">
+        <input maxlength="1" data-answer="N">
+        <input maxlength="1" data-answer="G">
+        <span>S</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="btn-area">
+
+    <button class="check-btn" onclick="checkAnswers()">
+      Check Answers
+    </button>
+
+    <button class="reset-btn" onclick="resetAnswers()">
+      Reset
+    </button>
+
+  </div>
+
+  <div class="result" id="result">
+    Score : 0
+  </div>
+
+</div>
+
+<script>
+
+function checkAnswers(){
+
+  const inputs = document.querySelectorAll("input");
+
+  let score = 0;
+
+  inputs.forEach((input)=>{
+
+    const correct = input.dataset.answer;
+
+    if(input.value.toUpperCase() === correct){
+
+      input.classList.remove("wrong");
+      input.classList.add("correct");
+
+      score++;
+
+    }else{
+
+      input.classList.remove("correct");
+      input.classList.add("wrong");
+
+    }
+
+  });
+
+  document.getElementById("result").innerText =
+  "Score : " + score + " / " + inputs.length;
+
+}
+
+function resetAnswers(){
+
+  const inputs = document.querySelectorAll("input");
+
+  inputs.forEach((input)=>{
+
+    input.value = "";
+    input.classList.remove("correct");
+    input.classList.remove("wrong");
+
+  });
+
+  document.getElementById("result").innerText = "Score : 0";
+
+}
+
+</script>
+
+</body>
+</html>
