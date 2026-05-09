@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Fill in the blanks</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#dff6ff,#ffffff,#e8f5e9);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.quiz-box{
+width:100%;
+max-width:1000px;
+background:#ffffff;
+border-radius:30px;
+padding:35px 28px 40px;
+border:5px solid #00b8f0;
+box-shadow:0 15px 40px rgba(0,0,0,0.12);
+position:relative;
+overflow:hidden;
+}
+
+.quiz-box::before{
+content:"";
+position:absolute;
+top:-70px;
+right:-70px;
+width:220px;
+height:220px;
+background:rgba(0,184,240,0.08);
+border-radius:50%;
+}
+
+.quiz-box::after{
+content:"";
+position:absolute;
+bottom:-70px;
+left:-70px;
+width:220px;
+height:220px;
+background:rgba(255,64,129,0.08);
+border-radius:50%;
+}
+
+.heading{
+font-size:30px;
+font-weight:700;
+color:#00a6d6;
+margin-bottom:20px;
+line-height:1.5;
+position:relative;
+z-index:2;
+}
+
+/* HELPER WORDS */
+
+.helper-container{
+display:flex;
+flex-wrap:nowrap;
+gap:12px;
+margin-bottom:28px;
+overflow-x:auto;
+padding-bottom:6px;
+position:relative;
+z-index:2;
+}
+
+.helper-container::-webkit-scrollbar{
+height:6px;
+}
+
+.helper-container::-webkit-scrollbar-thumb{
+background:#ffb3d1;
+border-radius:10px;
+}
+
+.helper-item{
+background:#ffe4ef;
+color:#8e24aa;
+padding:12px 20px;
+border-radius:16px;
+font-size:18px;
+font-weight:600;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+white-space:nowrap;
+flex-shrink:0;
+transition:0.3s;
+}
+
+.helper-item:hover{
+transform:translateY(-2px) scale(1.04);
+}
+
+.question-box{
+background:#f9fcff;
+border:2px solid #c9efff;
+border-radius:22px;
+padding:22px;
+margin-bottom:20px;
+transition:0.3s;
+position:relative;
+z-index:2;
+}
+
+.question-box:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 22px rgba(0,0,0,0.08);
+}
+
+.question{
+font-size:22px;
+font-weight:500;
+color:#444;
+line-height:1.9;
+}
+
+.blank-input{
+width:180px;
+border:none;
+border-bottom:3px solid #888;
+background:transparent;
+font-size:20px;
+font-weight:700;
+color:#d81b60;
+text-align:center;
+outline:none;
+padding:4px;
+margin:0 5px;
+transition:0.3s;
+}
+
+.blank-input:focus{
+border-color:#00b8f0;
+}
+
+.blank-input.correct{
+border-color:#2e7d32;
+color:#1b5e20;
+}
+
+.blank-input.wrong{
+border-color:#c62828;
+color:#b71c1c;
+}
+
+.buttons{
+text-align:center;
+margin-top:28px;
+position:relative;
+z-index:2;
+}
+
+.check-btn,
+.reset-btn{
+background:linear-gradient(135deg,#ff9800,#ff6f00);
+color:#fff;
+border:none;
+padding:14px 30px;
+border-radius:40px;
+font-size:17px;
+font-weight:700;
+cursor:pointer;
+margin:8px;
+transition:0.3s;
+box-shadow:0 8px 18px rgba(255,152,0,0.3);
+}
+
+.check-btn:hover,
+.reset-btn:hover{
+transform:translateY(-2px) scale(1.04);
+}
+
+.result{
+margin-top:24px;
+text-align:center;
+font-size:28px;
+font-weight:700;
+color:#0047ab;
+position:relative;
+z-index:2;
+}
+
+/* MOBILE RESPONSIVE */
+
+@media(max-width:768px){
+
+body{
+padding:10px;
+align-items:flex-start;
+}
+
+.quiz-box{
+padding:20px 14px 28px;
+border-radius:22px;
+}
+
+.heading{
+font-size:22px;
+line-height:1.5;
+margin-bottom:16px;
+}
+
+.helper-container{
+gap:10px;
+}
+
+.helper-item{
+font-size:15px;
+padding:10px 14px;
+}
+
+.question-box{
+padding:16px;
+border-radius:18px;
+margin-bottom:16px;
+}
+
+.question{
+font-size:16px;
+line-height:1.8;
+}
+
+.blank-input{
+width:120px;
+font-size:16px;
+margin-top:8px;
+}
+
+.result{
+font-size:22px;
+margin-top:18px;
+}
+
+.check-btn,
+.reset-btn{
+width:100%;
+font-size:15px;
+padding:13px 16px;
+margin:8px 0;
+border-radius:30px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<div class="heading">
+3. Fill in the blanks.
+</div>
+
+<!-- HELPER WORDS -->
+
+
+
+<div class="question-box">
+
+<div class="question">
+a. The
+<input type="text" class="blank-input" id="q1">
+is the head of the school.
+</div>
+
+</div>
+
+<div class="question-box">
+
+<div class="question">
+b. We should walk in a
+<input type="text" class="blank-input" id="q2">
+so that we do not fall.
+</div>
+
+</div>
+
+<div class="question-box">
+
+<div class="question">
+c. We learn to play musical instruments in the
+<input type="text" class="blank-input" id="q3">
+room.
+</div>
+
+</div>
+
+<div class="question-box">
+
+<div class="question">
+d. Tell your
+<input type="text" class="blank-input" id="q4">
+if you get hurt or feel sick.
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button class="check-btn" onclick="checkAnswers()">
+Check Answers
+</button>
+
+<button class="reset-btn" onclick="resetQuiz()">
+Reset
+</button>
+
+</div>
+
+<div class="result" id="result">
+Score: 0 / 4
+</div>
+
+</div>
+
+<script>
+
+const answers = {
+
+q1:"principal",
+q2:"queue",
+q3:"music",
+q4:"teacher"
+
+};
+
+function checkAnswers(){
+
+let score = 0;
+
+Object.keys(answers).forEach(id=>{
+
+const input = document.getElementById(id);
+
+const userAnswer = input.value.trim().toLowerCase();
+
+const correctAnswer = answers[id];
+
+input.classList.remove("correct","wrong");
+
+if(userAnswer === correctAnswer){
+
+input.classList.add("correct");
+
+score++;
+
+}else{
+
+input.classList.add("wrong");
+
+}
+
+});
+
+document.getElementById("result").innerText =
+`Score: ${score} / 4`;
+
+let incorrect = 4 - score;
+
+setTimeout(()=>{
+
+alert(
+`✅ Correct Answers: ${score}\n❌ Incorrect Answers: ${incorrect}`
+);
+
+},300);
+
+}
+
+function resetQuiz(){
+
+Object.keys(answers).forEach(id=>{
+
+const input = document.getElementById(id);
+
+input.value = "";
+
+input.classList.remove("correct","wrong");
+
+});
+
+document.getElementById("result").innerText =
+"Score: 0 / 4";
+
+}
+
+</script>
+
+</body>
+</html>

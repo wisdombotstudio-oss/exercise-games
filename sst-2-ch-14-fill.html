@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Fill in the Blanks</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#eaf9ff,#ffffff,#eefbf0);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+overflow-x:hidden;
+}
+
+.quiz-box{
+width:100%;
+max-width:1000px;
+background:#f7f7f7;
+border:5px solid #00b7ef;
+border-radius:30px;
+padding:35px 28px 40px;
+position:relative;
+overflow:hidden;
+box-shadow:0 15px 35px rgba(0,0,0,0.08);
+animation:fadeIn 0.8s ease;
+}
+
+/* BACKGROUND CIRCLES */
+
+.quiz-box::before{
+content:"";
+position:absolute;
+top:-70px;
+right:-70px;
+width:230px;
+height:230px;
+background:rgba(0,183,239,0.08);
+border-radius:50%;
+animation:floatOne 8s ease-in-out infinite;
+}
+
+.quiz-box::after{
+content:"";
+position:absolute;
+bottom:-70px;
+left:-70px;
+width:230px;
+height:230px;
+background:rgba(255,105,180,0.08);
+border-radius:50%;
+animation:floatTwo 10s ease-in-out infinite;
+}
+
+/* HEADING */
+
+.heading{
+font-size:30px;
+font-weight:700;
+color:#00a8e8;
+margin-bottom:24px;
+position:relative;
+z-index:2;
+}
+
+/* WORD BANK */
+
+.word-bank{
+background:#ffe8f2;
+padding:14px 20px;
+border-radius:14px;
+font-size:24px;
+font-weight:500;
+text-align:center;
+margin-bottom:30px;
+color:#333;
+position:relative;
+z-index:2;
+animation:fadeUp 0.7s ease;
+}
+
+/* QUESTION BOX */
+
+.question-box{
+background:#ffffff;
+border:2px solid #c8efff;
+border-radius:22px;
+padding:22px;
+margin-bottom:20px;
+position:relative;
+z-index:2;
+transition:0.35s;
+animation:fadeUp 0.6s ease;
+}
+
+.question-box:hover{
+transform:translateY(-4px) scale(1.01);
+box-shadow:0 12px 25px rgba(0,0,0,0.08);
+}
+
+/* QUESTION */
+
+.question{
+font-size:24px;
+font-weight:500;
+color:#333;
+line-height:1.8;
+}
+
+/* INPUT */
+
+.blank-input{
+width:220px;
+border:none;
+border-bottom:3px solid #00b7ef;
+background:transparent;
+font-size:22px;
+font-weight:600;
+text-align:center;
+outline:none;
+padding:4px;
+margin:0 6px;
+color:#333;
+transition:0.3s;
+}
+
+.blank-input:focus{
+border-color:#ff5ca8;
+transform:scale(1.03);
+}
+
+/* BUTTON */
+
+.button-area{
+text-align:center;
+margin-top:28px;
+position:relative;
+z-index:2;
+}
+
+.check-btn{
+background:linear-gradient(135deg,#ff9800,#ff6f00);
+color:#fff;
+border:none;
+padding:14px 40px;
+border-radius:40px;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+transition:0.35s;
+box-shadow:0 8px 18px rgba(255,152,0,0.35);
+}
+
+.check-btn:hover{
+transform:translateY(-3px) scale(1.05);
+box-shadow:0 12px 24px rgba(255,152,0,0.4);
+}
+
+/* SCORE */
+
+.score{
+margin-top:25px;
+text-align:center;
+font-size:34px;
+font-weight:700;
+color:#0047ab;
+position:relative;
+z-index:2;
+}
+
+/* CORRECT */
+
+.correct{
+border-bottom:3px solid #2e7d32 !important;
+color:#1b5e20;
+animation:correctPulse 0.5s ease;
+}
+
+/* WRONG */
+
+.wrong{
+border-bottom:3px solid #c62828 !important;
+color:#b71c1c;
+animation:wrongShake 0.4s ease;
+}
+
+/* ANIMATIONS */
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(30px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+}
+
+to{
+opacity:1;
+}
+
+}
+
+@keyframes correctPulse{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.08);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+@keyframes wrongShake{
+
+0%{
+transform:translateX(0);
+}
+
+25%{
+transform:translateX(-6px);
+}
+
+50%{
+transform:translateX(6px);
+}
+
+75%{
+transform:translateX(-4px);
+}
+
+100%{
+transform:translateX(0);
+}
+
+}
+
+@keyframes floatOne{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(15px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+@keyframes floatTwo{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-15px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+body{
+padding:10px;
+align-items:flex-start;
+}
+
+.quiz-box{
+padding:20px 14px 28px;
+border-radius:22px;
+}
+
+.heading{
+font-size:22px;
+margin-bottom:18px;
+}
+
+.word-bank{
+font-size:16px;
+padding:12px;
+line-height:1.8;
+}
+
+.question-box{
+padding:16px;
+margin-bottom:16px;
+}
+
+.question{
+font-size:17px;
+line-height:1.8;
+}
+
+.blank-input{
+width:130px;
+font-size:16px;
+}
+
+.score{
+font-size:24px;
+}
+
+.check-btn{
+width:100%;
+font-size:15px;
+padding:13px 16px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<div class="heading">
+2. Fill in the blanks.
+</div>
+
+<div class="word-bank">
+Leaves, Hottest, Spring, Hot soup, Rainbow
+</div>
+
+<div id="quiz">
+
+<div class="question-box">
+<div class="question">
+a. The days are longest and
+<input type="text" class="blank-input" id="q1">
+in the summer season.
+</div>
+</div>
+
+<div class="question-box">
+<div class="question">
+b. We see beautiful
+<input type="text" class="blank-input" id="q2">
+in the rainy season.
+</div>
+</div>
+
+<div class="question-box">
+<div class="question">
+c. Flowers bloom and butterflies fly in
+<input type="text" class="blank-input" id="q3">
+.
+</div>
+</div>
+
+<div class="question-box">
+<div class="question">
+d.
+<input type="text" class="blank-input" id="q4">
+change colour and fall from trees in autumn.
+</div>
+</div>
+
+</div>
+
+<div class="button-area">
+<button class="check-btn" onclick="checkAnswers()">
+Check Answers
+</button>
+</div>
+
+<div class="score" id="score">
+Score: 0 / 4
+</div>
+
+</div>
+
+<script>
+
+const answers = {
+q1:"Hottest",
+q2:"Rainbow",
+q3:"Spring",
+q4:"Leaves"
+};
+
+function checkAnswers(){
+
+let score = 0;
+
+Object.keys(answers).forEach(id=>{
+
+const input = document.getElementById(id);
+
+const userAnswer = input.value.trim().toLowerCase();
+
+const correctAnswer = answers[id].toLowerCase();
+
+input.classList.remove("correct","wrong");
+
+if(userAnswer === correctAnswer){
+
+input.classList.add("correct");
+
+score++;
+
+}else{
+
+input.classList.add("wrong");
+
+}
+
+});
+
+document.getElementById("score").innerText =
+`Score: ${score} / 4`;
+
+if(score === 4){
+
+setTimeout(()=>{
+
+alert("🎉 Excellent! All answers are correct.");
+
+},300);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

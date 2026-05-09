@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Fill in the blanks</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+min-height:100vh;
+background:#ffffff;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.quiz-box{
+width:100%;
+max-width:950px;
+background:#f7f7f7;
+border-radius:22px;
+padding:28px 24px 35px;
+border:4px solid #00bdf2;
+box-shadow:0 6px 18px rgba(0,0,0,0.12);
+}
+
+.heading{
+font-size:22px;
+font-weight:bold;
+color:#00a6d6;
+margin-bottom:18px;
+font-family:Georgia,serif;
+}
+
+.word-box{
+background:#f7dfe7;
+display:inline-block;
+padding:10px 20px;
+font-size:20px;
+font-family:Georgia,serif;
+margin-bottom:24px;
+border-radius:4px;
+color:#00838f;
+font-weight:bold;
+}
+
+.question-box{
+margin-bottom:20px;
+}
+
+.question{
+font-size:20px;
+font-family:Georgia,serif;
+color:#5a2d82;
+line-height:1.9;
+}
+
+.blank-input{
+width:170px;
+border:none;
+border-bottom:2px solid #666;
+background:transparent;
+font-size:20px;
+font-family:Georgia,serif;
+text-align:center;
+outline:none;
+padding:2px 4px;
+margin:0 4px;
+color:#d81b60;
+font-weight:bold;
+}
+
+.blank-input.correct{
+border-bottom:3px solid #2e7d32;
+color:#1b5e20;
+font-weight:bold;
+}
+
+.blank-input.wrong{
+border-bottom:3px solid #c62828;
+color:#b71c1c;
+font-weight:bold;
+}
+
+.buttons{
+text-align:center;
+margin-top:26px;
+}
+
+.check-btn,
+.reset-btn{
+background:#ff9800;
+color:#fff;
+border:none;
+padding:11px 28px;
+border-radius:28px;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+margin:8px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.check-btn:hover,
+.reset-btn:hover{
+background:#f57c00;
+}
+
+.result{
+margin-top:18px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#003db8;
+}
+
+@media(max-width:768px){
+
+.question{
+font-size:17px;
+}
+
+.blank-input{
+width:120px;
+font-size:17px;
+}
+
+.word-box{
+font-size:16px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<div class="heading">
+2. Fill in the blanks
+</div>
+
+<center>
+
+<div class="word-box">
+Kerala, igloo, germs, canvas
+</div>
+
+</center>
+
+<div class="question-box">
+
+<div class="question">
+a. A house made of snow blocks is called an
+<input type="text" class="blank-input" id="q1">.
+</div>
+
+</div>
+
+<div class="question-box">
+
+<div class="question">
+b. Sunlight is important because it keeps the house free from
+<input type="text" class="blank-input" id="q2">.
+</div>
+
+</div>
+
+<div class="question-box">
+
+<div class="question">
+c. A tent is usually made of a strong cloth called
+<input type="text" class="blank-input" id="q3">.
+</div>
+
+</div>
+
+<div class="question-box">
+
+<div class="question">
+d. We can find houseboat in
+<input type="text" class="blank-input" id="q4">.
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button class="check-btn" onclick="checkAnswers()">
+Check Answers
+</button>
+
+<button class="reset-btn" onclick="resetQuiz()">
+Reset
+</button>
+
+</div>
+
+<div class="result" id="result">
+Score: 0 / 4
+</div>
+
+</div>
+
+<script>
+
+const answers = {
+
+q1:"igloo",
+q2:"germs",
+q3:"canvas",
+q4:"kerala"
+
+};
+
+function checkAnswers(){
+
+let score = 0;
+
+Object.keys(answers).forEach(id=>{
+
+const input = document.getElementById(id);
+
+const userAnswer = input.value.trim().toLowerCase();
+
+const correctAnswer = answers[id];
+
+input.classList.remove("correct","wrong");
+
+if(userAnswer === correctAnswer){
+
+input.classList.add("correct");
+
+score++;
+
+}else{
+
+input.classList.add("wrong");
+
+}
+
+});
+
+document.getElementById("result").innerText =
+`Score: ${score} / 4`;
+
+}
+
+function resetQuiz(){
+
+Object.keys(answers).forEach(id=>{
+
+const input = document.getElementById(id);
+
+input.value = "";
+
+input.classList.remove("correct","wrong");
+
+});
+
+document.getElementById("result").innerText =
+"Score: 0 / 4";
+
+}
+
+</script>
+
+</body>
+</html>

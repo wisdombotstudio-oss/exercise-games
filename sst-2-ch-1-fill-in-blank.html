@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Fill in the Blanks</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+min-height:100vh;
+background:#ffffff;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.quiz-box{
+width:100%;
+max-width:950px;
+background:#f7f7f7;
+border-radius:22px;
+padding:28px 24px 35px;
+border:4px solid #00bdf2;
+box-shadow:0 6px 18px rgba(0,0,0,0.12);
+}
+
+.heading{
+font-size:22px;
+font-weight:bold;
+color:#00a6d6;
+margin-bottom:22px;
+font-family:Georgia,serif;
+}
+
+.question-box{
+margin-bottom:24px;
+}
+
+.question{
+font-size:18px;
+font-family:Georgia,serif;
+color:#333;
+line-height:1.8;
+}
+
+.blank-input{
+width:160px;
+border:none;
+border-bottom:2px solid #555;
+background:transparent;
+font-size:18px;
+font-family:Georgia,serif;
+text-align:center;
+outline:none;
+padding:2px 4px;
+margin:0 4px;
+}
+
+.blank-input.correct{
+border-bottom:3px solid #2e7d32;
+color:#1b5e20;
+font-weight:bold;
+}
+
+.blank-input.wrong{
+border-bottom:3px solid #c62828;
+color:#b71c1c;
+font-weight:bold;
+}
+
+.buttons{
+text-align:center;
+margin-top:28px;
+}
+
+.check-btn,
+.reset-btn{
+background:#ff9800;
+color:#fff;
+border:none;
+padding:11px 28px;
+border-radius:28px;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+margin:8px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.check-btn:hover,
+.reset-btn:hover{
+background:#f57c00;
+}
+
+.result{
+margin-top:18px;
+text-align:center;
+font-size:20px;
+font-weight:bold;
+color:#003db8;
+}
+
+@media(max-width:768px){
+
+.question{
+font-size:16px;
+}
+
+.blank-input{
+width:120px;
+font-size:16px;
+}
+
+.heading{
+font-size:20px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<div class="heading">
+2. Fill in the blanks.
+</div>
+
+<div class="question-box">
+
+<div class="question">
+a. A family is a special group of people who are
+<input type="text" class="blank-input" id="q1">
+to each other.
+</div>
+
+</div>
+
+<div class="question-box">
+
+<div class="question">
+b. A
+<input type="text" class="blank-input" id="q2">
+is a visual map that shows how different generations are connected.
+</div>
+
+</div>
+
+<div class="question-box">
+
+<div class="question">
+c. In a
+<input type="text" class="blank-input" id="q3">
+family, members often share the same house and kitchen.
+</div>
+
+</div>
+
+<div class="question-box">
+
+<div class="question">
+d. Your parents' brothers and sisters are known as your
+<input type="text" class="blank-input" id="q4">
+and
+<input type="text" class="blank-input" id="q5">.
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button class="check-btn" onclick="checkAnswers()">
+Check Answers
+</button>
+
+<button class="reset-btn" onclick="resetQuiz()">
+Reset
+</button>
+
+</div>
+
+<div class="result" id="result">
+Score: 0 / 5
+</div>
+
+</div>
+
+<script>
+
+const answers = {
+
+q1:"related",
+q2:"family tree",
+q3:"joint",
+q4:"uncles",
+q5:"aunts"
+
+};
+
+function checkAnswers(){
+
+let score = 0;
+
+Object.keys(answers).forEach(id=>{
+
+const input = document.getElementById(id);
+
+const userAnswer = input.value.trim().toLowerCase();
+
+const correctAnswer = answers[id];
+
+input.classList.remove("correct","wrong");
+
+if(userAnswer === correctAnswer){
+
+input.classList.add("correct");
+
+score++;
+
+}else{
+
+input.classList.add("wrong");
+
+}
+
+});
+
+document.getElementById("result").innerText =
+`Score: ${score} / 5`;
+
+}
+
+function resetQuiz(){
+
+Object.keys(answers).forEach(id=>{
+
+const input = document.getElementById(id);
+
+input.value = "";
+
+input.classList.remove("correct","wrong");
+
+});
+
+document.getElementById("result").innerText =
+"Score: 0 / 5";
+
+}
+
+</script>
+
+</body>
+</html>

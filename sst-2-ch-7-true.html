@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Write True or False</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#dff6ff,#ffffff,#e8f5e9);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.quiz-box{
+width:100%;
+max-width:1000px;
+background:#ffffff;
+border-radius:30px;
+padding:35px 28px 40px;
+border:5px solid #00b8f0;
+box-shadow:0 15px 40px rgba(0,0,0,0.12);
+position:relative;
+overflow:hidden;
+}
+
+.quiz-box::before{
+content:"";
+position:absolute;
+top:-70px;
+right:-70px;
+width:220px;
+height:220px;
+background:rgba(0,184,240,0.08);
+border-radius:50%;
+}
+
+.quiz-box::after{
+content:"";
+position:absolute;
+bottom:-70px;
+left:-70px;
+width:220px;
+height:220px;
+background:rgba(255,64,129,0.08);
+border-radius:50%;
+}
+
+.heading{
+font-size:30px;
+font-weight:700;
+color:#00a6d6;
+margin-bottom:30px;
+line-height:1.5;
+position:relative;
+z-index:2;
+}
+
+.question-box{
+background:#f9fcff;
+border:2px solid #c9efff;
+border-radius:22px;
+padding:22px;
+margin-bottom:20px;
+transition:0.3s;
+position:relative;
+z-index:2;
+}
+
+.question-box:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 22px rgba(0,0,0,0.08);
+}
+
+.question-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+}
+
+.question{
+font-size:22px;
+font-weight:500;
+color:#444;
+line-height:1.7;
+flex:1;
+}
+
+.options{
+display:flex;
+gap:12px;
+}
+
+.option-btn{
+background:#fff;
+border:2px solid #ff4fa0;
+border-radius:14px;
+padding:11px 20px;
+font-size:16px;
+font-weight:600;
+color:#d81b60;
+cursor:pointer;
+transition:0.3s;
+min-width:90px;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+.option-btn:hover{
+background:#fff0f7;
+transform:scale(1.05);
+}
+
+.option-btn.correct{
+background:#d4f8d4;
+border-color:#2e7d32;
+color:#1b5e20;
+}
+
+.option-btn.wrong{
+background:#ffd9dd;
+border-color:#c62828;
+color:#b71c1c;
+}
+
+.result{
+margin-top:26px;
+text-align:center;
+font-size:28px;
+font-weight:700;
+color:#0047ab;
+position:relative;
+z-index:2;
+}
+
+.buttons{
+text-align:center;
+margin-top:24px;
+position:relative;
+z-index:2;
+}
+
+.reset-btn{
+background:linear-gradient(135deg,#ff9800,#ff6f00);
+color:#fff;
+border:none;
+padding:14px 34px;
+border-radius:40px;
+font-size:17px;
+font-weight:700;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 8px 18px rgba(255,152,0,0.35);
+}
+
+.reset-btn:hover{
+transform:translateY(-2px) scale(1.05);
+}
+
+/* MOBILE RESPONSIVE */
+
+@media(max-width:768px){
+
+body{
+padding:10px;
+align-items:flex-start;
+}
+
+.quiz-box{
+padding:20px 14px 28px;
+border-radius:22px;
+}
+
+.heading{
+font-size:22px;
+line-height:1.5;
+margin-bottom:20px;
+}
+
+.question-box{
+padding:16px;
+border-radius:18px;
+margin-bottom:16px;
+}
+
+.question-row{
+flex-direction:column;
+align-items:flex-start;
+gap:14px;
+}
+
+.question{
+font-size:16px;
+line-height:1.6;
+}
+
+.options{
+width:100%;
+display:flex;
+gap:10px;
+}
+
+.option-btn{
+flex:1;
+font-size:14px;
+padding:10px 12px;
+min-width:auto;
+}
+
+.result{
+font-size:22px;
+margin-top:18px;
+}
+
+.reset-btn{
+width:100%;
+font-size:15px;
+padding:13px 16px;
+border-radius:30px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<div class="heading">
+4. Write true or false for the following.
+</div>
+
+<div id="quiz"></div>
+
+<div class="result" id="result">
+Score: 0 / 4
+</div>
+
+<div class="buttons">
+
+<button class="reset-btn" onclick="resetQuiz()">
+Reset
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+question:"a. We can borrow books from the library.",
+answer:"True"
+},
+
+{
+question:"b. Teachers go to the art room to relax.",
+answer:"False"
+},
+
+{
+question:"c. We learn to use computers at school.",
+answer:"True"
+},
+
+{
+question:"d. We should be quiet in a library.",
+answer:"True"
+}
+
+];
+
+let score = 0;
+let answered = 0;
+
+function loadQuiz(){
+
+const quiz = document.getElementById("quiz");
+
+quiz.innerHTML = "";
+
+questions.forEach((q)=>{
+
+const questionBox = document.createElement("div");
+
+questionBox.className = "question-box";
+
+const questionRow = document.createElement("div");
+
+questionRow.className = "question-row";
+
+const question = document.createElement("div");
+
+question.className = "question";
+
+question.innerText = q.question;
+
+questionRow.appendChild(question);
+
+const optionsDiv = document.createElement("div");
+
+optionsDiv.className = "options";
+
+["True","False"].forEach(option=>{
+
+const button = document.createElement("button");
+
+button.className = "option-btn";
+
+button.innerText = option;
+
+button.onclick = ()=>checkAnswer(button,option,q.answer,optionsDiv);
+
+optionsDiv.appendChild(button);
+
+});
+
+questionRow.appendChild(optionsDiv);
+
+questionBox.appendChild(questionRow);
+
+quiz.appendChild(questionBox);
+
+});
+
+}
+
+function checkAnswer(button,selected,correctAnswer,optionsDiv){
+
+const buttons = optionsDiv.querySelectorAll(".option-btn");
+
+buttons.forEach(btn=>{
+
+btn.disabled = true;
+
+if(btn.innerText === correctAnswer){
+
+btn.classList.add("correct");
+
+}
+
+});
+
+if(selected === correctAnswer){
+
+score++;
+
+}else{
+
+button.classList.add("wrong");
+
+}
+
+answered++;
+
+document.getElementById("result").innerText =
+`Score: ${score} / ${questions.length}`;
+
+if(answered === questions.length){
+
+let incorrect = questions.length - score;
+
+setTimeout(()=>{
+
+alert(
+`✅ Correct Answers: ${score}\n❌ Incorrect Answers: ${incorrect}`
+);
+
+},300);
+
+}
+
+}
+
+function resetQuiz(){
+
+score = 0;
+
+answered = 0;
+
+document.getElementById("result").innerText =
+`Score: 0 / ${questions.length}`;
+
+loadQuiz();
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

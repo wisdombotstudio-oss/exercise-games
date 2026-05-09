@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Understanding of the Chapter</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#dff6ff,#ffffff,#e8f5e9);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:25px;
+}
+
+.quiz-box{
+width:100%;
+max-width:1000px;
+background:#ffffff;
+border-radius:30px;
+padding:35px 28px 40px;
+box-shadow:0 15px 40px rgba(0,0,0,0.12);
+border:5px solid #00b8f0;
+position:relative;
+overflow:hidden;
+}
+
+.quiz-box::before{
+content:"";
+position:absolute;
+top:-80px;
+right:-80px;
+width:220px;
+height:220px;
+background:rgba(0,184,240,0.08);
+border-radius:50%;
+}
+
+.quiz-box::after{
+content:"";
+position:absolute;
+bottom:-70px;
+left:-70px;
+width:200px;
+height:200px;
+background:rgba(255,64,129,0.08);
+border-radius:50%;
+}
+
+.top-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:22px;
+position:relative;
+z-index:2;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.top-header h1{
+font-size:32px;
+font-weight:700;
+color:#e53935;
+letter-spacing:0.5px;
+}
+
+.badge{
+background:linear-gradient(135deg,#ff1744,#ff5252);
+color:#fff;
+padding:10px 22px;
+border-radius:30px;
+font-size:15px;
+font-weight:700;
+box-shadow:0 6px 16px rgba(255,0,0,0.25);
+}
+
+.sub-heading{
+font-size:24px;
+font-weight:700;
+color:#00a6d6;
+margin-bottom:30px;
+position:relative;
+z-index:2;
+}
+
+.question-box{
+background:#f9fcff;
+border:2px solid #c9efff;
+border-radius:24px;
+padding:24px;
+margin-bottom:24px;
+transition:0.3s;
+position:relative;
+z-index:2;
+}
+
+.question-box:hover{
+transform:translateY(-4px);
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.question{
+font-size:22px;
+font-weight:600;
+color:#333;
+line-height:1.7;
+margin-bottom:18px;
+}
+
+.options{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:16px;
+}
+
+.option-btn{
+background:#fff;
+border:2px solid #ff4fa0;
+border-radius:18px;
+padding:14px 18px;
+font-size:17px;
+font-weight:500;
+color:#444;
+cursor:pointer;
+transition:0.3s;
+text-align:left;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+.option-btn:hover{
+background:#fff0f7;
+transform:scale(1.03);
+}
+
+.option-btn.correct{
+background:#d4f8d4;
+border-color:#2e7d32;
+color:#1b5e20;
+font-weight:700;
+}
+
+.option-btn.wrong{
+background:#ffd9dd;
+border-color:#c62828;
+color:#b71c1c;
+font-weight:700;
+}
+
+.result{
+margin-top:28px;
+text-align:center;
+font-size:28px;
+font-weight:700;
+color:#0047ab;
+position:relative;
+z-index:2;
+}
+
+.buttons{
+text-align:center;
+margin-top:26px;
+position:relative;
+z-index:2;
+}
+
+.reset-btn{
+background:linear-gradient(135deg,#ff9800,#ff6f00);
+color:#fff;
+border:none;
+padding:15px 34px;
+border-radius:40px;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 8px 18px rgba(255,152,0,0.35);
+}
+
+.reset-btn:hover{
+transform:translateY(-2px) scale(1.05);
+}
+
+@media(max-width:768px){
+
+body{
+padding:12px;
+align-items:flex-start;
+}
+
+.quiz-box{
+padding:20px 14px 28px;
+border-radius:20px;
+}
+
+.top-header{
+flex-direction:column;
+align-items:flex-start;
+gap:12px;
+}
+
+.top-header h1{
+font-size:22px;
+line-height:1.4;
+}
+
+.badge{
+font-size:13px;
+padding:8px 16px;
+}
+
+.sub-heading{
+font-size:18px;
+line-height:1.5;
+margin-bottom:20px;
+}
+
+.question-box{
+padding:16px;
+border-radius:18px;
+margin-bottom:18px;
+}
+
+.question{
+font-size:16px;
+line-height:1.6;
+}
+
+.options{
+grid-template-columns:1fr;
+gap:12px;
+}
+
+.option-btn{
+width:100%;
+min-width:100%;
+font-size:15px;
+padding:12px 14px;
+}
+
+.result{
+font-size:22px;
+margin-top:20px;
+}
+
+.reset-btn{
+width:100%;
+font-size:16px;
+padding:14px 20px;
+}
+
+}
+
+.sub-heading{
+font-size:20px;
+}
+
+.question{
+font-size:18px;
+}
+
+.option-btn{
+font-size:15px;
+}
+
+.result{
+font-size:22px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<div class="top-header">
+
+<h1>
+Understanding of the chapter
+</h1>
+
+<div class="badge">
+Comprehension
+</div>
+
+</div>
+
+<div class="sub-heading">
+1. Tick (✓) the correct answer.
+</div>
+
+<div id="quiz"></div>
+
+<div class="result" id="result">
+Score: 0 / 4
+</div>
+
+<div class="buttons">
+
+<button class="reset-btn" onclick="resetQuiz()">
+Reset Quiz
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+question:"a. Which of these is the main source of water on Earth?",
+options:[
+"i. Well",
+"ii. Rain",
+"iii. Tap"
+],
+answer:"ii. Rain"
+},
+
+{
+question:"b. To stay healthy, we should always drink:",
+options:[
+"i. Salty water",
+"ii. Dirty water",
+"iii. Clean and purified water"
+],
+answer:"iii. Clean and purified water"
+},
+
+{
+question:"c. Farmers need water to grow:",
+options:[
+"i. Toys",
+"ii. Crops and plants",
+"iii. Rocks"
+],
+answer:"ii. Crops and plants"
+},
+
+{
+question:"d. We get underground water from:",
+options:[
+"i. Tap",
+"ii. Purifier",
+"iii. Well"
+],
+answer:"iii. Well"
+}
+
+];
+
+let score = 0;
+let answered = 0;
+
+function loadQuiz(){
+
+const quiz = document.getElementById("quiz");
+
+quiz.innerHTML = "";
+
+questions.forEach((q)=>{
+
+const questionBox = document.createElement("div");
+questionBox.className = "question-box";
+
+const question = document.createElement("div");
+question.className = "question";
+question.innerText = q.question;
+questionBox.appendChild(question);
+
+const optionsDiv = document.createElement("div");
+optionsDiv.className = "options";
+
+q.options.forEach(option=>{
+
+const button = document.createElement("button");
+button.className = "option-btn";
+button.innerText = option;
+button.onclick = ()=>checkAnswer(button,option,q.answer,optionsDiv);
+
+optionsDiv.appendChild(button);
+
+});
+
+questionBox.appendChild(optionsDiv);
+quiz.appendChild(questionBox);
+
+});
+
+}
+
+function checkAnswer(button,selected,correctAnswer,optionsDiv){
+
+const allButtons = optionsDiv.querySelectorAll(".option-btn");
+
+allButtons.forEach(btn=>{
+
+btn.disabled = true;
+
+if(btn.innerText === correctAnswer){
+btn.classList.add("correct");
+}
+
+});
+
+if(selected === correctAnswer){
+score++;
+}else{
+button.classList.add("wrong");
+}
+
+answered++;
+
+document.getElementById("result").innerText =
+`Score: ${score} / ${questions.length}`;
+
+if(answered === questions.length){
+
+let incorrect = questions.length - score;
+
+setTimeout(()=>{
+
+alert(
+`✅ Correct Answers: ${score}\n❌ Incorrect Answers: ${incorrect}`
+);
+
+},300);
+
+}
+
+}
+
+function resetQuiz(){
+
+score = 0;
+answered = 0;
+
+document.getElementById("result").innerText =
+`Score: 0 / ${questions.length}`;
+
+loadQuiz();
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>
+

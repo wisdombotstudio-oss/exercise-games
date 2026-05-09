@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match the Following – Communication Devices</title>
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      background: #eff6ff;
+      min-height: 100vh;
+      padding: 1rem 1rem 2rem;
+      color: #1f2937;
+    }
+    .diamond {
+      width: 16px; height: 16px;
+      transform: rotate(45deg);
+      background-color: white;
+      border: 2px solid #ef4444;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative; z-index: 20;
+    }
+    .diamond:hover { transform: rotate(45deg) scale(1.3); box-shadow: 0 0 10px rgba(239,68,68,0.5); }
+    .diamond.active { background-color: #ef4444; transform: rotate(45deg) scale(1.2); }
+    .diamond.connected { background-color: #0d9488; border-color: #0d9488; }
+    svg line { transition: stroke 0.3s ease; animation: drawLine 0.4s ease-out forwards; }
+    @keyframes drawLine {
+      from { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+      to   { stroke-dasharray: 1000; stroke-dashoffset: 0; }
+    }
+    .disabled-overlay { position: absolute; inset: 0; z-index: 30; display: none; }
+    .page { max-width: 64rem; margin: 0 auto; background: white; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); overflow: hidden; }
+    .header { background: #3b82f6; color: white; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.025em; }
+    .badge { background: #f97316; color: white; padding: 0.25rem 1.5rem; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.1em; border: 1px solid #fb923c; white-space: nowrap; }
+    .instructions { text-align: center; color: #6b7280; margin-top: 1.5rem; padding: 0 1rem; font-weight: 500; font-size: 0.95rem; }
+    .game-area { padding: 1.5rem 2rem; position: relative; }
+    #lines-svg { position: absolute; inset: 0; pointer-events: none; width: 100%; height: 100%; z-index: 10; }
+    .match-container { display: flex; justify-content: space-between; position: relative; }
+    .col { width: 42%; display: flex; flex-direction: column; gap: 1.25rem; }
+    .item-card {
+      display: flex; align-items: center; justify-content: space-between;
+      border: 2px solid #e5e7eb; border-radius: 1rem;
+      padding: 0.5rem; background: white;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      transition: border-color 0.15s; min-height: 80px;
+    }
+    .item-card.left:hover  { border-color: #93c5fd; }
+    .item-card.right:hover { border-color: #fdba74; }
+    .item-img { width: 6rem; height: 6rem; object-fit: contain; border-radius: 0.75rem; flex-shrink: 0; display: block; background: #f9fafb; }
+    .item-label { flex-grow: 1; text-align: center; font-weight: 700; color: #374151; font-size: 1rem; padding: 0 0.5rem; }
+    .dot-wrap-r { margin-right: -10px; flex-shrink: 0; }
+    .dot-wrap-l { margin-left: -10px;  flex-shrink: 0; }
+    .controls { margin-top: 3rem; text-align: center; border-top: 1px solid #f3f4f6; padding-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .btn-row { display: flex; gap: 1rem; }
+    .btn { font-family: inherit; font-size: 1.125rem; font-weight: 700; padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer; transition: background 0.15s; }
+    .btn-clear { background: #e5e7eb; color: #374151; }
+    .btn-clear:hover { background: #d1d5db; }
+    .btn-check { background: #3b82f6; color: white; padding: 0.75rem 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+    .btn-check:hover { background: #2563eb; }
+    #results-area { font-size: 1.5rem; font-weight: 700; margin-top: 1rem; display: none; }
+    .score-perfect { color: #16a34a; }
+    .score-partial  { color: #ef4444; }
+    #retry-btn { background: none; border: none; color: #3b82f6; text-decoration: underline; cursor: pointer; font-size: 1rem; font-family: inherit; display: none; }
+    #retry-btn:hover { color: #1d4ed8; }
+    @media (max-width: 600px) {
+      .item-img { width: 3.5rem; height: 3.5rem; }
+      .item-label { font-size: 0.78rem; padding: 0 0.25rem; }
+      .col { width: 44%; }
+      .header h1 { font-size: 1.1rem; }
+      .item-card { padding: 0.35rem; border-radius: 0.75rem; }
+      .game-area { padding: 1rem; }
+    }
+    @media (max-width: 400px) {
+      .item-img { width: 2.8rem; height: 2.8rem; }
+      .item-label { font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <h1>Match the following.</h1>
+    <span class="badge">EVALUATION</span>
+  </div>
+  <p class="instructions" id="instruction-text">
+    Click the diamond next to an image, then click the diamond next to its matching word.
+  </p>
+  <div class="game-area">
+    <svg id="lines-svg"></svg>
+    <div id="blocker" class="disabled-overlay"></div>
+    <div class="match-container" id="match-container">
+      <div class="col" id="left-column"></div>
+      <div class="col" id="right-column"></div>
+    </div>
+    <div class="controls">
+      <div class="btn-row">
+        <button class="btn btn-clear" onclick="clearLines()">Clear All</button>
+        <button class="btn btn-check" onclick="checkAnswers()">Check Answers</button>
+      </div>
+      <div id="results-area"></div>
+      <button id="retry-btn" onclick="resetGame()">Play Again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const leftItems = [
+  { id: 'smartphone', label: 'a.', src: 'data:image/png;base64,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' },
+  { id: 'newspaper',  label: 'b.', src: 'data:image/png;base64,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' },
+  { id: 'letter',     label: 'c.', src: 'data:image/png;base64,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' },
+  { id: 'radio',      label: 'd.', src: 'data:image/png;base64,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' }
+];
+
+const rightItems = [
+  { id: 'w_radio',      label: 'i.',   word: 'radio'      },
+  { id: 'w_letter',     label: 'ii.',  word: 'letter'     },
+  { id: 'w_smartphone', label: 'iii.', word: 'smartphone' },
+  { id: 'w_newspaper',  label: 'iv.',  word: 'newspaper'  }
+];
+
+const correctAnswers = {
+  smartphone: 'w_smartphone',
+  newspaper:  'w_newspaper',
+  letter:     'w_letter',
+  radio:      'w_radio'
+};
+
+let selectedLeft = null;
+let connections  = {};
+let isEvaluated  = false;
+
+function initGame() {
+  const leftCol  = document.getElementById('left-column');
+  const rightCol = document.getElementById('right-column');
+  leftCol.innerHTML  = '';
+  rightCol.innerHTML = '';
+
+  leftItems.forEach(item => {
+    leftCol.insertAdjacentHTML('beforeend', `
+      <div class="item-card left">
+        <img class="item-img" src="${item.src}" alt="${item.id}">
+        <span class="item-label">${item.label}</span>
+        <div class="dot-wrap-r">
+          <div class="diamond" id="dot-${item.id}" onclick="selectLeft('${item.id}')"></div>
+        </div>
+      </div>
+    `);
+  });
+
+  rightItems.forEach(item => {
+    rightCol.insertAdjacentHTML('beforeend', `
+      <div class="item-card right">
+        <div class="dot-wrap-l">
+          <div class="diamond" id="dot-${item.id}" onclick="selectRight('${item.id}')"></div>
+        </div>
+        <span class="item-label" style="font-size:1.1rem;">${item.label}&nbsp;&nbsp;${item.word}</span>
+      </div>
+    `);
+  });
+
+  window.addEventListener('resize', () => drawLines());
+}
+
+function selectLeft(id) {
+  if (isEvaluated) return;
+  selectedLeft = (selectedLeft === id) ? null : id;
+  updateDots();
+}
+
+function selectRight(rightId) {
+  if (isEvaluated || !selectedLeft) return;
+  for (let k in connections) {
+    if (connections[k] === rightId) delete connections[k];
+  }
+  connections[selectedLeft] = rightId;
+  selectedLeft = null;
+  updateDots();
+  drawLines();
+}
+
+function updateDots() {
+  document.querySelectorAll('.diamond').forEach(d => d.classList.remove('active','connected'));
+  if (selectedLeft) document.getElementById(`dot-${selectedLeft}`).classList.add('active');
+  for (let lId in connections) {
+    document.getElementById(`dot-${lId}`).classList.add('connected');
+    document.getElementById(`dot-${connections[lId]}`).classList.add('connected');
+  }
+}
+
+function drawLines(evalColors = null) {
+  const svg = document.getElementById('lines-svg');
+  const svgRect = svg.getBoundingClientRect();
+  svg.innerHTML = '';
+  for (let lId in connections) {
+    let rId  = connections[lId];
+    let dot1 = document.getElementById(`dot-${lId}`);
+    let dot2 = document.getElementById(`dot-${rId}`);
+    if (!dot1 || !dot2) continue;
+    const r1 = dot1.getBoundingClientRect();
+    const r2 = dot2.getBoundingClientRect();
+    const x1 = r1.left + r1.width/2  - svgRect.left;
+    const y1 = r1.top  + r1.height/2 - svgRect.top;
+    const x2 = r2.left + r2.width/2  - svgRect.left;
+    const y2 = r2.top  + r2.height/2 - svgRect.top;
+    let color = '#0d9488';
+    if (evalColors && evalColors[lId]) color = evalColors[lId] === 'correct' ? '#22c55e' : '#ef4444';
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+    line.setAttribute('stroke', color);
+    line.setAttribute('stroke-width', '4');
+    line.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(line);
+  }
+}
+
+function clearLines() {
+  if (isEvaluated) return;
+  connections = {}; selectedLeft = null;
+  updateDots(); drawLines();
+}
+
+function checkAnswers() {
+  const instrEl   = document.getElementById('instruction-text');
+  const resultsEl = document.getElementById('results-area');
+  const retryBtn  = document.getElementById('retry-btn');
+  if (Object.keys(connections).length < leftItems.length) {
+    instrEl.innerHTML = '<span style="color:#f97316;font-weight:700;">Please connect all items before checking!</span>';
+    return;
+  }
+  isEvaluated = true;
+  document.getElementById('blocker').style.display = 'block';
+  let score = 0, evalColors = {};
+  leftItems.forEach(item => {
+    if (connections[item.id] === correctAnswers[item.id]) { score++; evalColors[item.id] = 'correct'; }
+    else evalColors[item.id] = 'incorrect';
+  });
+  drawLines(evalColors);
+  resultsEl.style.display = 'block';
+  retryBtn.style.display  = 'inline';
+  instrEl.innerText = 'Here are your results!';
+  if (score === leftItems.length)
+    resultsEl.innerHTML = `<span class="score-perfect">Perfect Score! ${score}/${leftItems.length} 🌟</span>`;
+  else
+    resultsEl.innerHTML = `<span class="score-partial">You scored ${score} out of ${leftItems.length}. Keep practicing!</span>`;
+}
+
+function resetGame() {
+  connections = {}; selectedLeft = null; isEvaluated = false;
+  document.getElementById('blocker').style.display = 'none';
+  document.getElementById('results-area').style.display = 'none';
+  document.getElementById('retry-btn').style.display    = 'none';
+  document.getElementById('instruction-text').innerText =
+    'Click the diamond next to an image, then click the diamond next to its matching word.';
+  updateDots(); drawLines();
+}
+
+window.onload = initGame;
+</script>
+</body>
+</html>
