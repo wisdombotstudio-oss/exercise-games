@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Community Helpers Exercise</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#e8f9ff,#ffffff,#eefdf5);
+padding:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* MAIN BOX */
+
+.main-box{
+width:100%;
+max-width:1100px;
+background:#fff;
+border-radius:35px;
+padding:35px;
+position:relative;
+overflow:hidden;
+border:5px solid #00b7ff;
+box-shadow:
+0 20px 40px rgba(0,0,0,0.08),
+0 10px 20px rgba(0,183,255,0.15);
+animation:fadeIn 0.8s ease;
+}
+
+/* DECORATIVE CIRCLES */
+
+.main-box::before{
+content:"";
+position:absolute;
+top:-80px;
+right:-80px;
+width:240px;
+height:240px;
+background:rgba(0,183,255,0.08);
+border-radius:50%;
+animation:float1 8s infinite ease-in-out;
+}
+
+.main-box::after{
+content:"";
+position:absolute;
+bottom:-90px;
+left:-90px;
+width:250px;
+height:250px;
+background:rgba(255,91,156,0.08);
+border-radius:50%;
+animation:float2 10s infinite ease-in-out;
+}
+
+/* TOP BAR */
+
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:28px;
+flex-wrap:wrap;
+gap:15px;
+position:relative;
+z-index:2;
+}
+
+.heading{
+font-size:36px;
+font-weight:800;
+color:#00aeea;
+}
+
+.badge{
+background:linear-gradient(135deg,#ff4fa0,#d92d82);
+color:#fff;
+padding:12px 22px;
+font-size:18px;
+font-weight:700;
+border-radius:12px;
+box-shadow:0 8px 18px rgba(255,79,160,0.25);
+animation:pulse 2s infinite;
+}
+
+/* QUESTION BOX */
+
+.question-box{
+background:#f9fcff;
+border:2px solid #d7f0ff;
+border-radius:24px;
+padding:24px;
+margin-bottom:24px;
+transition:0.35s;
+position:relative;
+z-index:2;
+animation:fadeUp 0.6s ease;
+}
+
+.question-box:hover{
+transform:translateY(-4px);
+box-shadow:0 14px 24px rgba(0,0,0,0.06);
+}
+
+.question{
+font-size:25px;
+font-weight:600;
+color:#333;
+margin-bottom:18px;
+line-height:1.6;
+}
+
+/* OPTIONS */
+
+.options{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.option-btn{
+background:#fff;
+border:2px solid #ff5ca8;
+border-radius:15px;
+padding:14px 18px;
+font-size:20px;
+font-weight:500;
+color:#333;
+cursor:pointer;
+transition:0.3s;
+text-align:left;
+}
+
+.option-btn:hover{
+background:#fff0f7;
+transform:translateX(5px);
+box-shadow:0 8px 16px rgba(255,92,168,0.22);
+}
+
+.option-btn.correct{
+background:#e7f8ea;
+border-color:#2e7d32;
+color:#1b5e20;
+animation:correctPulse 0.5s ease;
+}
+
+.option-btn.wrong{
+background:#ffebee;
+border-color:#c62828;
+color:#b71c1c;
+animation:wrongShake 0.4s ease;
+}
+
+/* SCORE */
+
+.score{
+margin-top:28px;
+text-align:center;
+font-size:34px;
+font-weight:800;
+color:#0057d8;
+position:relative;
+z-index:2;
+}
+
+/* BUTTON */
+
+.reset-area{
+text-align:center;
+margin-top:24px;
+position:relative;
+z-index:2;
+}
+
+.reset-btn{
+background:linear-gradient(135deg,#ff9800,#ff6f00);
+color:#fff;
+border:none;
+padding:15px 38px;
+border-radius:50px;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+transition:0.35s;
+box-shadow:0 10px 20px rgba(255,111,0,0.25);
+}
+
+.reset-btn:hover{
+transform:translateY(-4px) scale(1.06);
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:scale(0.96);
+}
+
+to{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+@keyframes correctPulse{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.08);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+@keyframes wrongShake{
+
+0%{
+transform:translateX(0);
+}
+
+25%{
+transform:translateX(-6px);
+}
+
+50%{
+transform:translateX(6px);
+}
+
+75%{
+transform:translateX(-4px);
+}
+
+100%{
+transform:translateX(0);
+}
+
+}
+
+@keyframes pulse{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.05);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+@keyframes float1{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(15px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+@keyframes float2{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-15px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+body{
+padding:10px;
+}
+
+.main-box{
+padding:22px;
+border-radius:24px;
+}
+
+.heading{
+font-size:24px;
+line-height:1.5;
+}
+
+.badge{
+font-size:14px;
+padding:8px 14px;
+}
+
+.question-box{
+padding:18px;
+}
+
+.question{
+font-size:18px;
+}
+
+.option-btn{
+font-size:16px;
+padding:12px;
+}
+
+.score{
+font-size:26px;
+}
+
+.reset-btn{
+width:100%;
+font-size:16px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="main-box">
+
+<div class="top-bar">
+
+<div class="heading">
+A. Tick (✓) the correct option.
+</div>
+
+<div class="badge">
+DECISION MAKING
+</div>
+
+</div>
+
+<div id="quiz"></div>
+
+<div class="score" id="score">
+Score: 0 / 5
+</div>
+
+<div class="reset-area">
+<button class="reset-btn" onclick="resetQuiz()">
+Reset
+</button>
+</div>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+question:'1. Where do we go when we are sick?',
+options:[
+'i. Library',
+'ii. Hospital',
+'iii. Park'
+],
+answer:'ii. Hospital'
+},
+
+{
+question:'2. Which place help us buy fruits and vegetables?',
+options:[
+'i. Market',
+'ii. School',
+'iii. Hospital'
+],
+answer:'i. Market'
+},
+
+{
+question:'3. Who keeps our neighbourhood safe?',
+options:[
+'i. Teachers',
+'ii. Policeman',
+'iii. Grocer'
+],
+answer:'ii. Policeman'
+},
+
+{
+question:'4. What do we call the place where we study?',
+options:[
+'i. School',
+'ii. Hospital',
+'iii. Park'
+],
+answer:'i. School'
+},
+
+{
+question:'5. What is a community?',
+options:[
+'i. People living separately',
+'ii. People living together',
+'iii. People living in pairs'
+],
+answer:'ii. People living together'
+}
+
+];
+
+let score = 0;
+let answered = 0;
+
+function loadQuiz(){
+
+const quiz = document.getElementById("quiz");
+
+quiz.innerHTML = "";
+
+questions.forEach((q,index)=>{
+
+const box = document.createElement("div");
+
+box.className = "question-box";
+
+box.style.animationDelay = `${index * 0.15}s`;
+
+const question = document.createElement("div");
+
+question.className = "question";
+
+question.innerText = q.question;
+
+box.appendChild(question);
+
+const options = document.createElement("div");
+
+options.className = "options";
+
+q.options.forEach(option=>{
+
+const btn = document.createElement("button");
+
+btn.className = "option-btn";
+
+btn.innerText = option;
+
+btn.onclick = ()=>checkAnswer(btn,option,q.answer,options);
+
+options.appendChild(btn);
+
+});
+
+box.appendChild(options);
+
+quiz.appendChild(box);
+
+});
+
+}
+
+function checkAnswer(button,selected,correctAnswer,optionsDiv){
+
+const buttons = optionsDiv.querySelectorAll(".option-btn");
+
+buttons.forEach(btn=>{
+
+btn.disabled = true;
+
+if(btn.innerText === correctAnswer){
+
+btn.classList.add("correct");
+
+}
+
+});
+
+if(selected === correctAnswer){
+
+score++;
+
+}else{
+
+button.classList.add("wrong");
+
+}
+
+answered++;
+
+document.getElementById("score").innerText =
+`Score: ${score} / ${questions.length}`;
+
+if(answered === questions.length){
+
+let incorrect = questions.length - score;
+
+setTimeout(()=>{
+
+alert(
+`✅ Correct Answers: ${score}\n❌ Incorrect Answers: ${incorrect}`
+);
+
+},400);
+
+}
+
+}
+
+function resetQuiz(){
+
+score = 0;
+answered = 0;
+
+document.getElementById("score").innerText =
+`Score: 0 / ${questions.length}`;
+
+loadQuiz();
+
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

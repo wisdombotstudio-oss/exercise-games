@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Fill in the Blanks</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#e8f9ff,#ffffff,#eefdf5);
+padding:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+.main-box{
+width:100%;
+max-width:1100px;
+background:#fff;
+border-radius:35px;
+padding:35px;
+position:relative;
+overflow:hidden;
+border:5px solid #00b7ff;
+box-shadow:
+0 20px 40px rgba(0,0,0,0.08),
+0 10px 20px rgba(0,183,255,0.15);
+}
+
+/* HEADER */
+
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:28px;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.heading{
+font-size:36px;
+font-weight:800;
+color:#00aeea;
+line-height:1.5;
+}
+
+.badge{
+background:#00a3d7;
+color:#fff;
+padding:12px 22px;
+font-size:18px;
+font-weight:700;
+border-radius:12px;
+}
+
+/* HELP BOX */
+
+.help-box{
+display:flex;
+justify-content:center;
+gap:18px;
+flex-wrap:wrap;
+margin-bottom:35px;
+}
+
+.help-word{
+background:#fff;
+border:2px solid #00b8f0;
+padding:10px 20px;
+border-radius:12px;
+font-size:22px;
+font-weight:600;
+color:#333;
+}
+
+/* QUESTION BOX */
+
+.question-box{
+background:#f9fcff;
+border:2px solid #d7f0ff;
+border-radius:24px;
+padding:24px;
+margin-bottom:24px;
+}
+
+.question{
+font-size:25px;
+font-weight:600;
+color:#333;
+line-height:1.9;
+}
+
+/* INPUT */
+
+.blank-input{
+width:220px;
+border:none;
+border-bottom:4px solid #333;
+background:transparent;
+font-size:24px;
+font-weight:700;
+color:#0077b6;
+text-align:center;
+outline:none;
+padding:5px;
+margin:0 5px;
+transition:0.3s;
+}
+
+.blank-input:focus{
+border-bottom-color:#ff4fa0;
+}
+
+.blank-input.correct{
+background:#e7f8ea;
+border-bottom-color:#2e7d32;
+color:#1b5e20;
+border-radius:8px;
+}
+
+.blank-input.wrong{
+background:#ffebee;
+border-bottom-color:#c62828;
+color:#b71c1c;
+border-radius:8px;
+}
+
+/* BUTTONS */
+
+.button-area{
+text-align:center;
+margin-top:30px;
+display:flex;
+justify-content:center;
+gap:16px;
+flex-wrap:wrap;
+}
+
+.btn{
+border:none;
+padding:14px 34px;
+border-radius:40px;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+color:#fff;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:translateY(-3px) scale(1.05);
+}
+
+.check-btn{
+background:linear-gradient(135deg,#00b894,#009688);
+}
+
+.reset-btn{
+background:linear-gradient(135deg,#ff9800,#ff6f00);
+}
+
+/* SCORE */
+
+.score{
+margin-top:28px;
+text-align:center;
+font-size:34px;
+font-weight:800;
+color:#0057d8;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+body{
+padding:10px;
+}
+
+.main-box{
+padding:22px;
+border-radius:24px;
+}
+
+.heading{
+font-size:24px;
+}
+
+.badge{
+font-size:14px;
+padding:8px 14px;
+}
+
+.question{
+font-size:18px;
+line-height:2;
+}
+
+.blank-input{
+width:150px;
+font-size:18px;
+}
+
+.help-word{
+font-size:18px;
+padding:8px 14px;
+}
+
+.button-area{
+flex-direction:column;
+}
+
+.btn{
+width:100%;
+}
+
+.score{
+font-size:24px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="main-box">
+
+<div class="top-bar">
+
+<div class="heading">
+B. Fill in the blanks. Use the words from the help box.
+</div>
+
+<div class="badge">
+REMEMBERING
+</div>
+
+</div>
+
+<!-- HELP WORDS -->
+
+<div class="help-box">
+
+<div class="help-word">Police</div>
+<div class="help-word">Bank</div>
+<div class="help-word">Letters</div>
+<div class="help-word">Park</div>
+
+</div>
+
+<!-- QUESTIONS -->
+
+<div class="question-box">
+<div class="question">
+1. We go to the post office to post
+<input type="text"
+class="blank-input"
+data-answer="letters">
+.
+</div>
+</div>
+
+<div class="question-box">
+<div class="question">
+2. We keep our money in the
+<input type="text"
+class="blank-input"
+data-answer="bank">
+.
+</div>
+</div>
+
+<div class="question-box">
+<div class="question">
+3. The
+<input type="text"
+class="blank-input"
+data-answer="police">
+protect us from thieves.
+</div>
+</div>
+
+<div class="question-box">
+<div class="question">
+4. Anna plays on the swing in the
+<input type="text"
+class="blank-input"
+data-answer="park">
+.
+</div>
+</div>
+
+<!-- BUTTONS -->
+
+<div class="button-area">
+
+<button class="btn check-btn" onclick="checkAnswers()">
+Check Answers
+</button>
+
+<button class="btn reset-btn" onclick="resetQuiz()">
+Reset
+</button>
+
+</div>
+
+<div class="score" id="score">
+Score: 0 / 4
+</div>
+
+</div>
+
+<script>
+
+const inputs =
+document.querySelectorAll(".blank-input");
+
+function checkAnswers(){
+
+let score = 0;
+let incorrect = 0;
+
+inputs.forEach(input=>{
+
+input.classList.remove(
+"correct",
+"wrong"
+);
+
+const userAnswer =
+input.value
+.trim()
+.toLowerCase();
+
+const correctAnswer =
+input.dataset.answer
+.toLowerCase();
+
+if(userAnswer === correctAnswer){
+
+input.classList.add("correct");
+score++;
+
+}else{
+
+input.classList.add("wrong");
+incorrect++;
+
+}
+
+});
+
+document.getElementById("score").innerText =
+`Score: ${score} / 4`;
+
+setTimeout(()=>{
+
+alert(
+`✅ Correct Answers: ${score}\n❌ Incorrect Answers: ${incorrect}`
+);
+
+},300);
+
+}
+
+function resetQuiz(){
+
+inputs.forEach(input=>{
+
+input.value = "";
+
+input.classList.remove(
+"correct",
+"wrong"
+);
+
+});
+
+document.getElementById("score").innerText =
+"Score: 0 / 4";
+
+}
+
+</script>
+
+</body>
+</html>
